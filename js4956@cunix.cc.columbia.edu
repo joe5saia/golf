@@ -2,8 +2,6 @@
 import json, urllib
 from pprint import pprint
 
-
-
 x = dict([('Joe',['34046', '24502', '20848', '06522', '20396']),
           ('Blake',['32102','32839','33448','26331','29221']),
           ('Alex',['21209','21528','25364','27408','25804']),
@@ -35,8 +33,11 @@ pos = map (lambda x:lboard['standings'][x]['position']['displayValue'],
   range(0,len(lboard['standings'])-1))
 
 for keya in x:
+  print keya
   for keyb in x[keya]:
+    print keyb
     url = "http://gripapi-static-pd.usopen.com/gripapi/player/"+keyb+".json"
+    print url
     response = urllib.urlopen(url)
     data = json.loads(response.read())
     first = data['player']['firstName']
