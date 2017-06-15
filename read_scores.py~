@@ -1,0 +1,52 @@
+#!/usr/bin/python
+import json, urllib
+from pprint import pprint
+
+x = dict([('Joe',['34046', '24502', '20848', '06522', '20396']),
+          ('Blake',['32102','32839','33448','26331','29221']),
+          ('Alex',['21209','21528','25364','27408','25804']),
+          ('Stephen',['28089','','','','']),
+          ('Eric',['','','','','']),
+          ('Justin',['','','','',''])
+          ])
+
+x = dict([('Joe',['34046', '24502', '20848', '06522', '20396'])])
+
+y = dict([('Joe',dict([('Last' , ['First', 'Score', 'Position'])])),
+          ('Blake',dict([('Last' , ['First', 'Score', 'Position'])])),
+          ('Alex',dict([('Last' , ['First', 'Score', 'Position'])])),
+          ('Stephen',dict([('Last' , ['First', 'Score', 'Position'])])),
+          ('Eric',dict([('Last' , ['First', 'Score', 'Position'])])),
+          ('Justin',dict([('Last' , ['First', 'Score', 'Position'])]))
+          ])
+
+for keya in x:
+  print keya
+  for keyb in x[keya]:
+    print keyb
+    url = "http://gripapi-static-pd.usopen.com/gripapi/player/"+keyb+".json"
+    print url
+    response = urllib.urlopen(url)
+    data = json.loads(response.read())
+    first = data['player']['firstName']
+    last  = data['player']['lastName']
+    score = data['toPar']['value']
+    position = data['position']['displayValue']
+    player = dict([(last, [first,score,position])])
+    y[keya].update(player)
+  del y[keya]['Last']
+
+
+for keya in y:
+  keys = y[keya].keys()
+  scores = map (lambda k:y[keya][k][1],y[keya].keys())
+  index = sorted(range(len(scores)), key=lambda k: scores[k])
+  tmp = keys[:]
+  for i in range(0,len(index)):
+    keys[i] = tmp[index[i]]
+  print '\n\n' + keya + '\'s players and scores are:'
+  for keyb in keys:
+    print y[keya][keyb][0] + " " + keyb + " at " + \
+    y[keya][keyb][2] +  " with " + str(y[keya][keyb][1])
+
+
