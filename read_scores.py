@@ -21,7 +21,7 @@ y = dict([('Joe',dict([('Last' , ['First', 'Score', 'Position'])])),
           ('Justin',dict([('Last' , ['First', 'Score', 'Position'])]))
           ])
 
-purse = 36.3
+purse = 12000000
 shares = [18.0, 10.8, 6.8, 4.8, 4, 3.6, 3.35, 3.1, 2.9, 2.7, \
           2.5, 2.3, 2.1, 1.9, 1.8, 1.7, 1.6, 1.5, 1.4, 1.3,\
           1.2, 1.12, 1.04, 0.96, 0.88, 0.8, 0.77, 0.74, 0.71,\
@@ -57,7 +57,8 @@ for keya in x:
   del y[keya]['Last']
 
 
-
+print '________________________________________________________________________________'
+print '________________________________________________________________________________'
 for keya in y:
   keys = y[keya].keys()
   scores = map (lambda k:y[keya][k][1],y[keya].keys())
@@ -65,13 +66,14 @@ for keya in y:
   tmp = keys[:]
   for i in range(0,len(index)):
     keys[i] = tmp[index[i]]
-  print '\n\n' + keya + '\'s players and scores are:'
+  print '________________________________________________________________________________'
+  print keya
   for keyb in keys:
-    print y[keya][keyb][0] + " " + keyb + " at " + \
-    y[keya][keyb][2] +  " with " + str(y[keya][keyb][1]) \
-    + ". Earnings is " + str(y[keya][keyb][3])
-  totearn = sum(map(lambda x:y[keya][x][3], y[keya].keys()))
-  print "His total earnings is " + str(totearn)
+    print "%s %s is %s with %+d. Earnings are %0.2f Million" % (y[keya][keyb][0], keyb, y[keya][keyb][2], y[keya][keyb][1], y[keya][keyb][3]*10**-6)
+  totearn = sum(map(lambda x:y[keya][x][3], y[keya].keys()))/(10**6)
+  print "%0.2f Million is %s's total earnings." % (totearn, keya)
+  if totearn < 0.1:
+    print "Wow you drafted poorly!"
 
 print "\n"
 
